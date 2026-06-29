@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { buttonClassName } from "@/components/ui/button";
+import { ContactForm } from "@/components/contact-form";
 import { siteConfig, whatsappUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -18,10 +18,15 @@ export default function ContactPage() {
             Planifiquemos tu próxima experiencia en Perú.
           </h1>
           <div className="mt-8 grid gap-4 text-[#475467]">
-            <a href={whatsappUrl()} className="flex items-center gap-3">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 transition hover:text-[#101828]"
+            >
               <Phone className="h-5 w-5 text-[#b8872d]" /> {siteConfig.whatsappDisplay}
             </a>
-            <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3">
+            <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition hover:text-[#101828]">
               <Mail className="h-5 w-5 text-[#b8872d]" /> {siteConfig.email}
             </a>
             <span className="flex items-center gap-3">
@@ -37,23 +42,7 @@ export default function ContactPage() {
             />
           </div>
         </div>
-        <form className="rounded-lg border border-[#e4e7ec] bg-white p-6 shadow-sm">
-          <div className="grid gap-5">
-            {["Nombre", "Correo", "Teléfono"].map((label) => (
-              <label key={label} className="grid gap-2 text-sm font-medium text-[#344054]">
-                {label}
-                <input className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20" />
-              </label>
-            ))}
-            <label className="grid gap-2 text-sm font-medium text-[#344054]">
-              Mensaje
-              <textarea rows={6} className="rounded-md border border-[#d0d5dd] px-4 py-3 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20" />
-            </label>
-            <a href={whatsappUrl()} className={buttonClassName("primary", "w-full")}>
-              Enviar por WhatsApp
-            </a>
-          </div>
-        </form>
+        <ContactForm />
       </div>
     </section>
   );

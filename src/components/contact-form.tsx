@@ -1,0 +1,81 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { MessageCircle } from "lucide-react";
+import { buttonClassName } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site";
+
+const initialForm = {
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
+export function ContactForm() {
+  const [form, setForm] = useState(initialForm);
+
+  const whatsappHref = useMemo(() => {
+    const lines = [
+      `Hola, soy ${form.name || "un viajero"}.`,
+      "Quiero planificar una experiencia con Qusqueando Travel.",
+      form.phone ? `Teléfono: ${form.phone}` : null,
+      form.email ? `Correo: ${form.email}` : null,
+      form.message ? `Mensaje: ${form.message}` : null,
+    ].filter(Boolean);
+
+    return `https://wa.me/${siteConfig.whatsapp.replace("+", "")}?text=${encodeURIComponent(lines.join("\n"))}`;
+  }, [form]);
+
+  function updateField(field: keyof typeof form, value: string) {
+    setForm((current) => ({ ...current, [field]: value }));
+  }
+
+  return (
+    <form className="rounded-lg border border-[#e4e7ec] bg-white p-6 shadow-sm">
+      <div className="grid gap-5">
+        <label className="grid gap-2 text-sm font-medium text-[#344054]">
+          Nombre
+          <input
+            value={form.name}
+            onChange={(event) => updateField("name", event.target.value)}
+            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            autoComplete="name"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-medium text-[#344054]">
+          Correo
+          <input
+            type="email"
+            value={form.email}
+            onChange={(event) => updateField("email", event.target.value)}
+            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            autoComplete="email"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-medium text-[#344054]">
+          Teléfono
+          <input
+            value={form.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            autoComplete="tel"
+          />
+        </label>
+        <label className="grid gap-2 text-sm font-medium text-[#344054]">
+          Mensaje
+          <textarea
+            rows={6}
+            value={form.message}
+            onChange={(event) => updateField("message", event.target.value)}
+            className="rounded-md border border-[#d0d5dd] px-4 py-3 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+          />
+        </label>
+        <a href={whatsappHref} target="_blank" rel="noreferrer" className={buttonClassName("primary", "w-full")}>
+          <MessageCircle className="h-4 w-4" />
+          Enviar por WhatsApp
+        </a>
+      </div>
+    </form>
+  );
+}
