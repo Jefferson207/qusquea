@@ -1,0 +1,197 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Check, Clock, MapPin, Mountain, ShieldCheck, Users, X } from "lucide-react";
+import { ExperienceCard } from "@/components/experience-card";
+import { ExperienceGallery } from "@/components/experience-gallery";
+import { MotionSection } from "@/components/motion-section";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { experiences as seedExperiences, getRelatedExperiences } from "@/lib/data";
+import { getExperience, getExperiences } from "@/lib/store";
+import { formatCurrency } from "@/lib/utils";
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return seedExperiences.map((experience) => ({ slug: experience.slug }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const experience = await getExperience(slug);
+
+  if (!experience) {
+    return {};
+  }
+
+  return {
+    title: experience.seoTitle,
+    description: experience.seoDescription,
+    openGraph: {
+      title: experience.seoTitle,
+      description: experience.seoDescription,
+      images: [{ url: experience.mainImage }],
+    },
+  };
+}
+
+export const dynamic = "force-dynamic";
+
+export default async function ExperienceDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const experience = await getExperience(slug);
+
+  if (!experience) {
+    notFound();
+  }
+
+  const allExperiences = await getExperiences();
+  const related =
+    allExperiences
+      .filter((item) => item.slug !== experience.slug && item.category === experience.category)
+      .concat(allExperiences.filter((item) => item.slug !== experience.slug))
+      .slice(0, 3) || getRelatedExperiences(experience);
+
+  return (
+    <article className="bg-[#f7f4ee]">
+      <section className="relative overflow-hidden pb-12 pt-10">
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_8%,rgba(214,168,79,0.16),transparent_30%),radial-gradient(circle_at_86%_22%,rgba(16,24,40,0.10),transparent_24%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 max-w-4xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b8872d]">
+              {experience.category}
+            </p>
+            <h1 className="mt-3 text-4xl font-bold text-[#101828] sm:text-5xl">{experience.name}</h1>
+            <p className="mt-5 text-lg leading-8 text-[#667085]">{experience.shortDescription}</p>
+          </div>
+          <ExperienceGallery images={experience.gallery} title={experience.name} />
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-12 px-4 pb-24 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8">
+        <div>
+          <MotionSection>
+            <div className="rounded-[28px] border border-white/80 bg-white p-6 shadow-[0_18px_54px_rgba(16,24,40,0.08)] sm:p-8">
+              <h2 className="text-2xl font-bold text-[#101828]">Descripción</h2>
+              <p className="mt-4 text-lg leading-8 text-[#667085]">{experience.fullDescription}</p>
+            </div>
+          </MotionSection>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {[
+              [Clock, "Duración", experience.duration],
+              [MapPin, "Ubicación", experience.location],
+              [Mountain, "Nivel", experience.difficulty],
+              [Users, "Modalidad", experience.modality],
+            ].map(([Icon, label, value]) => (
+              <div
+                key={String(label)}
+                className="group rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(16,24,40,0.12)]"
+              >
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fff6df] text-[#b8872d] transition group-hover:scale-105">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-[#98a2b3]">
+                  {String(label)}
+                </p>
+                <p className="mt-1 font-semibold text-[#101828]">{String(value)}</p>
+              </div>
+            ))}
+          </div>
+
+          <DetailSection title="Incluye" items={experience.includes} icon="check" />
+          <DetailSection title="No incluye" items={experience.excludes} icon="x" />
+
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold text-[#101828]">Itinerario</h2>
+            <div className="mt-6 grid gap-4">
+              {experience.itinerary.map((item, index) => (
+                <div
+                  key={item.title}
+                  className="rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)]"
+                >
+                  <p className="text-sm font-semibold text-[#b8872d]">Día {index + 1}</p>
+                  <h3 className="mt-1 font-bold text-[#101828]">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#667085]">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-12">
+            <h2 className="text-2xl font-bold text-[#101828]">Preguntas frecuentes</h2>
+            <div className="mt-6 grid gap-4">
+              {experience.faqs.map((faq) => (
+                <details
+                  key={faq.question}
+                  className="rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)]"
+                >
+                  <summary className="cursor-pointer font-semibold text-[#101828]">{faq.question}</summary>
+                  <p className="mt-3 text-sm leading-6 text-[#667085]">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <aside className="h-fit rounded-[28px] border border-white/80 bg-white/90 p-6 shadow-[0_24px_70px_rgba(16,24,40,0.16)] backdrop-blur lg:sticky lg:top-24">
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#101828] text-[#d6a84f]">
+              <ShieldCheck className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="text-sm text-[#667085]">Precio desde</p>
+              <p className="text-3xl font-bold text-[#101828]">
+                {formatCurrency(experience.priceFrom, experience.currency)}
+              </p>
+            </div>
+          </div>
+          <WhatsAppButton experienceName={experience.name} className="mt-7 w-full" />
+          <p className="mt-4 text-xs leading-5 text-[#667085]">
+            Respuesta directa por WhatsApp para confirmar disponibilidad, horarios y modalidad.
+          </p>
+        </aside>
+      </section>
+
+      <section className="bg-white py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-[#101828]">Experiencias relacionadas</h2>
+          <div className="mt-8 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((item) => (
+              <ExperienceCard key={item.id} experience={item} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </article>
+  );
+}
+
+function DetailSection({
+  title,
+  items,
+  icon,
+}: {
+  title: string;
+  items: string[];
+  icon: "check" | "x";
+}) {
+  const Icon = icon === "check" ? Check : X;
+
+  return (
+    <section className="mt-12 rounded-[28px] border border-white/80 bg-white p-6 shadow-[0_18px_54px_rgba(16,24,40,0.08)] sm:p-8">
+      <h2 className="text-2xl font-bold text-[#101828]">{title}</h2>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        {items.map((item) => (
+          <div key={item} className="flex items-center gap-3 text-sm text-[#475467]">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#fff6df] text-[#b8872d]">
+              <Icon className="h-4 w-4" />
+            </span>
+            {item}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
