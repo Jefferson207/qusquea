@@ -32,14 +32,14 @@ export function ContactForm() {
   }
 
   return (
-    <form className="rounded-lg border border-[#e4e7ec] bg-white p-6 shadow-sm">
-      <div className="grid gap-5">
+    <form className="surface-card p-6 sm:p-7">
+      <div className="surface-content grid gap-5">
         <label className="grid gap-2 text-sm font-medium text-[#344054]">
           Nombre
           <input
             value={form.name}
             onChange={(event) => updateField("name", event.target.value)}
-            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            className="field"
             autoComplete="name"
           />
         </label>
@@ -49,7 +49,7 @@ export function ContactForm() {
             type="email"
             value={form.email}
             onChange={(event) => updateField("email", event.target.value)}
-            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            className="field"
             autoComplete="email"
           />
         </label>
@@ -58,7 +58,7 @@ export function ContactForm() {
           <input
             value={form.phone}
             onChange={(event) => updateField("phone", event.target.value)}
-            className="h-11 rounded-md border border-[#d0d5dd] px-4 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            className="field"
             autoComplete="tel"
           />
         </label>
@@ -68,7 +68,7 @@ export function ContactForm() {
             rows={6}
             value={form.message}
             onChange={(event) => updateField("message", event.target.value)}
-            className="rounded-md border border-[#d0d5dd] px-4 py-3 outline-none focus:border-[#d6a84f] focus:ring-2 focus:ring-[#d6a84f]/20"
+            className="field"
           />
         </label>
         <a href={whatsappHref} target="_blank" rel="noreferrer" className={buttonClassName("primary", "w-full")}>

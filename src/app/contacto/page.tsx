@@ -33,11 +33,11 @@ export default function ContactPage() {
               <MapPin className="h-5 w-5 text-[#b8872d]" /> {siteConfig.address}
             </span>
           </div>
-          <div className="mt-8 overflow-hidden rounded-lg border border-[#e4e7ec] bg-white">
+          <div className="surface-card mt-8 p-2">
             <iframe
               title="Mapa de Cusco"
               src="https://www.google.com/maps?q=Cusco%2C%20Peru&output=embed"
-              className="h-72 w-full"
+              className="surface-content h-72 w-full rounded-2xl"
               loading="lazy"
             />
           </div>

@@ -16,14 +16,14 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ y: -8 }}
-      className="group relative overflow-hidden rounded-[24px] border border-white/80 bg-white p-3 shadow-[0_18px_50px_rgba(16,24,40,0.10)] transition-shadow duration-500 hover:shadow-[0_28px_80px_rgba(16,24,40,0.18)]"
+      className="surface-card group p-3 transition-shadow duration-500 hover:shadow-[0_28px_80px_rgba(16,24,40,0.16)]"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
         <div className="absolute -left-24 top-10 h-40 w-40 rotate-12 bg-white/40 blur-2xl" />
         <div className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-[#d6a84f]/70 to-transparent" />
       </div>
 
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[20px]">
+      <div className="surface-content relative aspect-[4/3] overflow-hidden rounded-2xl">
         <Image
           src={experience.mainImage}
           alt={experience.name}
@@ -42,7 +42,7 @@ export function ExperienceCard({ experience }: { experience: Experience }) {
         </span>
       </div>
 
-      <div className="relative p-4">
+      <div className="surface-content p-4">
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-xl font-bold leading-tight text-[#101828]">{experience.name}</h3>
           <span className="shrink-0 rounded-full bg-[#fff6df] px-3 py-1 text-sm font-bold text-[#8a621e]">

@@ -57,7 +57,8 @@ export default async function Home() {
           <div className="grid gap-6 md:grid-cols-4">
             {benefits.map((benefit) => (
               <MotionSection key={benefit.title}>
-                <div className="group h-full rounded-[24px] border border-white/70 bg-white/82 p-6 shadow-[0_18px_48px_rgba(16,24,40,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_28px_70px_rgba(16,24,40,0.14)]">
+                <div className="surface-card surface-hover group h-full p-6 backdrop-blur">
+                  <div className="surface-content">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#101828] text-[#d6a84f] shadow-[0_14px_34px_rgba(16,24,40,0.18)] transition duration-300 group-hover:rotate-3 group-hover:scale-105">
                     <benefit.icon className="h-7 w-7" />
                   </div>
@@ -65,6 +66,7 @@ export default async function Home() {
                   <p className="mt-3 text-sm leading-6 text-[#667085]">
                     Servicio cuidado desde la planificación hasta el cierre de cada recorrido.
                   </p>
+                  </div>
                 </div>
               </MotionSection>
             ))}

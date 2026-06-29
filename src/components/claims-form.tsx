@@ -141,13 +141,13 @@ export function ClaimsForm({ siteConfig }: { siteConfig: SiteConfig }) {
         </div>
       </ClaimsSection>
 
-      <div className="rounded-lg border border-[#e4e7ec] bg-white p-6 shadow-sm">
-        <label className="flex items-start gap-3 text-sm leading-6 text-[#475467]">
+      <div className="surface-card p-6">
+        <label className="surface-content flex items-start gap-3 text-sm leading-6 text-[#475467]">
           <input name="accepted" type="checkbox" className="mt-1" required />
           Declaro que la información consignada es verdadera y autorizo el uso de mis datos para la atención de esta
           comunicación.
         </label>
-        <Button type="submit" className="mt-6 w-full sm:w-auto">
+        <Button type="submit" className="surface-content mt-6 w-full sm:w-auto">
           <Send className="h-4 w-4" />
           Enviar reclamo
         </Button>
@@ -158,10 +158,10 @@ export function ClaimsForm({ siteConfig }: { siteConfig: SiteConfig }) {
 
 export function ClaimsHeader({ siteName }: { siteName: string }) {
   return (
-    <div className="mb-8 rounded-lg border border-[#e4e7ec] bg-white p-6 shadow-sm">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="surface-card mb-8 p-6">
+      <div className="surface-content flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#b8872d]">Legal y seguridad</p>
+          <p className="eyebrow">Legal y seguridad</p>
           <h1 className="mt-2 text-3xl font-bold text-[#101828] sm:text-4xl">Libro de Reclamaciones</h1>
           <p className="mt-3 text-[#667085]">
             Registra una queja o reclamo relacionado con los servicios de {siteName}.
@@ -185,9 +185,9 @@ function ClaimsSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-[#dedbd2] bg-white p-6 shadow-sm sm:p-8">
-      <div className="mb-6 flex items-start gap-3">
-        <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#fff6df] text-[#b8872d]">
+    <section className="surface-card p-6 sm:p-8">
+      <div className="surface-content mb-6 flex items-start gap-3">
+        <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#fff6df] text-[#b8872d]">
           {icon}
         </span>
         <div>
@@ -195,7 +195,7 @@ function ClaimsSection({
           <p className="mt-2 text-sm text-black">{description}</p>
         </div>
       </div>
-      {children}
+      <div className="surface-content">{children}</div>
     </section>
   );
 }

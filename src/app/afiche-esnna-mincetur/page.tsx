@@ -14,13 +14,13 @@ export default function EsnnaPage() {
       <LegalPage {...legalPages.esnna} />
       <section className="-mt-12 bg-[#f6f7f9] pb-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-[24px] border border-[#e4e7ec] bg-white p-3 shadow-[0_18px_54px_rgba(16,24,40,0.10)]">
+          <div className="surface-card p-3">
             <Image
               src="/esnna.png"
               alt="Afiche ESNNA MINCETUR"
               width={1200}
               height={1600}
-              className="h-auto w-full rounded-[18px]"
+              className="surface-content h-auto w-full rounded-2xl"
               priority
             />
           </div>

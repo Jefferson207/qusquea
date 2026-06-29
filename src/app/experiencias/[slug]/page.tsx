@@ -72,9 +72,11 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
       <section className="mx-auto grid max-w-7xl gap-12 px-4 pb-24 sm:px-6 lg:grid-cols-[1fr_380px] lg:px-8">
         <div>
           <MotionSection>
-            <div className="rounded-[28px] border border-white/80 bg-white p-6 shadow-[0_18px_54px_rgba(16,24,40,0.08)] sm:p-8">
+            <div className="surface-card p-6 sm:p-8">
+              <div className="surface-content">
               <h2 className="text-2xl font-bold text-[#101828]">Descripción</h2>
               <p className="mt-4 text-lg leading-8 text-[#667085]">{experience.fullDescription}</p>
+              </div>
             </div>
           </MotionSection>
 
@@ -87,8 +89,9 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
             ].map(([Icon, label, value]) => (
               <div
                 key={String(label)}
-                className="group rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_58px_rgba(16,24,40,0.12)]"
+                className="surface-card surface-hover group p-5"
               >
+                <div className="surface-content">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fff6df] text-[#b8872d] transition group-hover:scale-105">
                   <Icon className="h-5 w-5" />
                 </div>
@@ -96,6 +99,7 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
                   {String(label)}
                 </p>
                 <p className="mt-1 font-semibold text-[#101828]">{String(value)}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -109,11 +113,13 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
               {experience.itinerary.map((item, index) => (
                 <div
                   key={item.title}
-                  className="rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)]"
+                  className="surface-card p-5"
                 >
+                  <div className="surface-content">
                   <p className="text-sm font-semibold text-[#b8872d]">Día {index + 1}</p>
                   <h3 className="mt-1 font-bold text-[#101828]">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-[#667085]">{item.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -125,17 +131,18 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
               {experience.faqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="rounded-[22px] border border-white/80 bg-white p-5 shadow-[0_14px_38px_rgba(16,24,40,0.07)]"
+                  className="surface-card p-5"
                 >
-                  <summary className="cursor-pointer font-semibold text-[#101828]">{faq.question}</summary>
-                  <p className="mt-3 text-sm leading-6 text-[#667085]">{faq.answer}</p>
+                  <summary className="surface-content cursor-pointer font-semibold text-[#101828]">{faq.question}</summary>
+                  <p className="surface-content mt-3 text-sm leading-6 text-[#667085]">{faq.answer}</p>
                 </details>
               ))}
             </div>
           </section>
         </div>
 
-        <aside className="h-fit rounded-[28px] border border-white/80 bg-white/90 p-6 shadow-[0_24px_70px_rgba(16,24,40,0.16)] backdrop-blur lg:sticky lg:top-24">
+        <aside className="surface-card h-fit p-6 backdrop-blur lg:sticky lg:top-24">
+          <div className="surface-content">
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#101828] text-[#d6a84f]">
               <ShieldCheck className="h-5 w-5" />
@@ -151,6 +158,7 @@ export default async function ExperienceDetailPage({ params }: PageProps) {
           <p className="mt-4 text-xs leading-5 text-[#667085]">
             Respuesta directa por WhatsApp para confirmar disponibilidad, horarios y modalidad.
           </p>
+          </div>
         </aside>
       </section>
 
@@ -180,7 +188,8 @@ function DetailSection({
   const Icon = icon === "check" ? Check : X;
 
   return (
-    <section className="mt-12 rounded-[28px] border border-white/80 bg-white p-6 shadow-[0_18px_54px_rgba(16,24,40,0.08)] sm:p-8">
+    <section className="surface-card mt-12 p-6 sm:p-8">
+      <div className="surface-content">
       <h2 className="text-2xl font-bold text-[#101828]">{title}</h2>
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {items.map((item) => (
@@ -191,6 +200,7 @@ function DetailSection({
             {item}
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

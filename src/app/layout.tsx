@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/footer";
+import { FloatingWhatsappChat } from "@/components/floating-whatsapp-chat";
 import { Navbar } from "@/components/navbar";
 import "./globals.css";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <FloatingWhatsappChat />
       </body>
     </html>
   );

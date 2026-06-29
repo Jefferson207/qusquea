@@ -58,7 +58,6 @@ export async function Footer() {
             <Link className="transition hover:text-white" href="/experiencias">Experiencias</Link>
             <Link className="transition hover:text-white" href="/nosotros">Nosotros</Link>
             <Link className="transition hover:text-white" href="/contacto">Contacto</Link>
-            <Link className="transition hover:text-white" href="/admin">Admin</Link>
           </div>
         </div>
         <div>
